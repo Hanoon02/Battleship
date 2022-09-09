@@ -1,3 +1,3 @@
 # Battleship
 
-## Empty Repo, will update soon
+## Battleship game creating using JavaScript
