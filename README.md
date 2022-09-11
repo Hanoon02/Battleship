@@ -1,3 +1,3 @@
 # Battleship
 
-## Battleship game creating using JavaScript
+## Battleship game created using JavaScript
