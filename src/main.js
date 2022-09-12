@@ -1,5 +1,79 @@
-const Ship = (coordinates) => {
+const Gameboard = () => {
+    const shipLengths = [2, 3, 3, 4, 5];
+
+    function startGame(){
+        const main = document.getElementById('main');
+        const popup = document.createElement('div');
+        popup.id = 'popup';
+        const popupText = document.createElement('p');
+        popupText.textContent = 'Welcome to Battleship!';
+        popup.appendChild(popupText);
+        const popupButton = document.createElement('button');
+        popupButton.textContent = 'Start Game';
+        popupButton.addEventListener('click', () => {
+            main.removeChild(popup);
+            createBoard(1);
+            setCoordinates();
+            createBoard(2);
+        });
+        popup.appendChild(popupButton);
+        main.appendChild(popup);
+    }
+
+    function createBoard(side){
+        let gameBoard ;
+        if(side===1){
+            gameBoard = document.getElementById("friendly");
+        }
+        else{
+            gameBoard = document.getElementById('enemy');
+        }
+        for (let i = 0; i < 7; i++) {
+            const row = document.createElement("div");
+            row.classList.add("row");
+            for(let j=0; j< 7;j++){
+                const cell = document.createElement("button");
+                cell.classList.add("cell");
+                cell.addEventListener("click", () => {
+                    console.log("clicked");
+                    cell.innerText = "X";
+                });
+                cell.id = `${i}-${j}`;
+                row.appendChild(cell);
+            }
+            gameBoard.appendChild(row);
+        }
+        
+    }
+    
+    function setCoordinates(){
+        const friendly = document.getElementById('friendly');
+        for(let i = 0; i < shipLengths.length; i++) {
+            const instruction = document.createElement('h3');
+            console.log("Ship " + i + " length: " + shipLengths[i]);
+            instruction.textContent = "Place ship " + (i+1) + " of length " + shipLengths[i];
+            friendly.appendChild(instruction);
+        }
+    };
+
+    return {
+        startGame,
+        setCoordinates,
+        createBoard,
+    };
+};
+
+const Player = () => {
+};
+
+const Ship = () => {
+    var shipCoordinates = []
     var health = coordinates.length;
+
+    function setCoordinates(coordinates){
+        shipCoordinates = coordinates;
+    }
+
     const hit = (position) => {
         coordinates[coordinates.indexOf(position)] = -1;
         health--;
@@ -14,24 +88,21 @@ const Ship = (coordinates) => {
     };
     
     return {
+        setCoordinates,
         hit,
         isSunk,
     };
 };
 
-const Gameboard = () => {
-    const shipLengths = [2, 3, 3, 4, 5];
-    
-    const setCoordinates = () => {
-        for(let i = 0; i < shipLengths.length; i++) {
-            console.log("Ship " + i + " length: " + shipLengths[i]);
-        }
-    };
+// Class Initialization
+const gameBoard = Gameboard();
+const playerOne = Player();
+const playerTwo = Player();
 
-    return {
-        setCoordinates,
-    };
-};
+const shipOne = Ship();
+const shipTwo = Ship();
+const shipThree = Ship();
+const shipFour = Ship();
+const shipFive = Ship();
 
-const Player = (name) => {
-};
+gameBoard.startGame();
