@@ -36,8 +36,14 @@ const Gameboard = () => {
                 cell.classList.add("cell");
                 cell.addEventListener("click", () => {
                     console.log("clicked");
-                    cell.innerText = "X";
+                    if(side===1){
+                        cell.innerText = "X";
+                    }
+                    else{
+                        cell.innerText = "O";
+                    }
                 });
+                
                 cell.id = `${i}-${j}`;
                 row.appendChild(cell);
             }
@@ -47,13 +53,27 @@ const Gameboard = () => {
     }
     
     function setCoordinates(){
+        let i =0;
         const friendly = document.getElementById('friendly');
-        for(let i = 0; i < shipLengths.length; i++) {
-            const instruction = document.createElement('h3');
-            console.log("Ship " + i + " length: " + shipLengths[i]);
-            instruction.textContent = "Place ship " + (i+1) + " of length " + shipLengths[i];
-            friendly.appendChild(instruction);
-        }
+        const addBtn = document.createElement('button');
+        addBtn.textContent = 'Add';
+        friendly.appendChild(addBtn);
+        addBtn.addEventListener('click', () => {
+            if(i<5){
+                const instruction = document.createElement('h3');
+                instruction.textContent = "Place ship " + (i+1) + " of length " + shipLengths[i];
+                friendly.appendChild(instruction);
+                i++;
+            }
+        });
+        
+
+        // for(let i = 0; i < shipLengths.length; i++) {
+        //     const instruction = document.createElement('h3');
+        //     console.log("Ship " + i + " length: " + shipLengths[i]);
+        //     instruction.textContent = "Place ship " + (i+1) + " of length " + shipLengths[i];
+        //     friendly.appendChild(instruction);
+        // }
     };
 
     return {
@@ -68,10 +88,11 @@ const Player = () => {
 
 const Ship = () => {
     var shipCoordinates = []
-    var health = coordinates.length;
+    var health = 0;
 
     function setCoordinates(coordinates){
         shipCoordinates = coordinates;
+        health = coordinates.length;
     }
 
     const hit = (position) => {
@@ -99,10 +120,10 @@ const gameBoard = Gameboard();
 const playerOne = Player();
 const playerTwo = Player();
 
-const shipOne = Ship();
-const shipTwo = Ship();
-const shipThree = Ship();
-const shipFour = Ship();
-const shipFive = Ship();
+// const shipOne = Ship();
+// const shipTwo = Ship();
+// const shipThree = Ship();
+// const shipFour = Ship();
+// const shipFive = Ship();
 
 gameBoard.startGame();
